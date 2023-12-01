@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'pages/mainPage.dart';
 
 //kiolvasáshoz
 class TemperatureMessage {
   TemperatureMessage({required this.value});
   final double value;
+}
+
+//kiolvasáshoz
+class UltrasonicMessage {
+  UltrasonicMessage({required this.isOpened});
+  final bool isOpened;
 }
 
 class ToggleFunc extends StatefulWidget {
@@ -59,9 +64,7 @@ class _ToggleFuncState extends State<ToggleFunc> {
                 leftHome +=
                     0.5; //és egészre kerekítve adom meg majd, így azt írja ki hányszor mentem el otthonról, nem a toggle számot
                 // await widget.addisHome(isHome); //addol új doc-ot (nem lett kiszedve a többi része, csak itt)
-                isHomeRef.update({"isHome": isHome}).then(
-                    (value) => print("DocumentSnapshot successfully updated!"),
-                    onError: (e) => print("Error updating document $e"));
+                isHomeRef.update({"isHome": isHome});
               },
             ),
           ],

@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'firebase_options.dart';
 import 'dart:async';
 import 'toggle.dart';
-import 'pages/mainPage.dart';
 
 class ApplicationState extends ChangeNotifier {
   ApplicationState() {
@@ -21,6 +20,10 @@ class ApplicationState extends ChangeNotifier {
   StreamSubscription<QuerySnapshot>? _temperatureSubscription;
   List<TemperatureMessage> _temperatureMessages = [];
   List<TemperatureMessage> get temperatureMessages => _temperatureMessages;
+
+  StreamSubscription<QuerySnapshot>? _ultrasonicSubscription;
+  List<UltrasonicMessage> _ultrasonicMessages = [];
+  List<UltrasonicMessage> get ultrasonicMessages => _ultrasonicMessages;
 
   Future<void> init() async {
     await Firebase.initializeApp(
@@ -53,6 +56,32 @@ class ApplicationState extends ChangeNotifier {
         _loggedIn = false;
         _temperatureMessages = [];
         _temperatureSubscription?.cancel();
+      }
+      notifyListeners();
+    });
+
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user != null) {
+        _loggedIn = true;
+        _ultrasonicSubscription = FirebaseFirestore.instance
+            .collection('door')
+            .orderBy('ts', descending: true)
+            .snapshots()
+            .listen((snapshot) {
+          _ultrasonicMessages = [];
+          for (final document in snapshot.docs) {
+            _ultrasonicMessages.add(
+              UltrasonicMessage(
+                isOpened: document.data()['open'] as bool,
+              ),
+            );
+          }
+          notifyListeners();
+        });
+      } else {
+        _loggedIn = false;
+        _ultrasonicMessages = [];
+        _ultrasonicSubscription?.cancel();
       }
       notifyListeners();
     });

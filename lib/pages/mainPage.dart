@@ -2,6 +2,7 @@ import '../src/widgets.dart';
 import 'package:flutter/material.dart';
 import '../toggle.dart';
 import '../app_state.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
@@ -29,6 +30,9 @@ class MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final postRef =
+        FirebaseFirestore.instance.collection("post").doc("post_state");
+
     final width = MediaQuery.of(context).size.width;
     final bool isSmallScreen = width < 700;
     final bool isLargeScreen = width > 1200;
@@ -50,10 +54,24 @@ class MainBody extends StatelessWidget {
         body: GridView.count(
           crossAxisCount: rownumber,
           children: List.generate(6, (index) {
-            // if (index == 0) {
-            //   return const Block(2, 'cm', 'DAILY AVG');
-            // }
-            // if (index == 1) {
+            if (index == 0) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30.0,
+                  vertical: 120,
+                ),
+                child: PostButton(
+                  onPressed: () async {
+                    // post cellectionben true-ra vált
+                    // for myself: csak a final postRef kell hozzá
+                    postRef.update({"post": true});
+                  },
+                  mainText: 'POST',
+                  secondText: 'A QUOTE',
+                ),
+              );
+            }
+            // if (index > 0) { //vagy am johet ide az else
             //   return const Text('1');
             // }
             // if (index == 2) {
@@ -67,13 +85,15 @@ class MainBody extends StatelessWidget {
             // }
             // if (index == 5) {
             //   return const Text('1');
-            // } else {
-            //   return const Text('0');
             // }
+            else {
+              return Block(valueList[index].toStringAsExponential(0),
+                  unitList[index], nameList[index], 270, 250);
+            }
 
-            return Center(
-                child: Block(valueList[index].toStringAsExponential(0),
-                    unitList[index], nameList[index], 270, 250));
+            // return Center(
+            //     child: Block(valueList[index].toStringAsExponential(0),
+            //         unitList[index], nameList[index], 270, 250));
           }),
         ));
   }

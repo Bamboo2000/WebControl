@@ -78,53 +78,6 @@ class Header extends StatelessWidget {
       );
 }
 
-// class Paragraph extends StatelessWidget {
-//   const Paragraph(this.content, {super.key});
-//   final String content;
-//   @override
-//   Widget build(BuildContext context) => Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-//         child: Text(
-//           content,
-//           style: const TextStyle(fontSize: 18, color: color_6),
-//         ),
-//       );
-// }
-
-// class DisplayStyle extends StatelessWidget {
-//   const DisplayStyle(this.content, {super.key});
-//   final String content;
-//   @override
-//   Widget build(BuildContext context) => Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-//         child: Text(
-//           content,
-//           style: const TextStyle(fontSize: 24, color: color_6),
-//         ),
-//       );
-// }
-
-// class IconAndDetail extends StatelessWidget {
-//   const IconAndDetail(this.icon, this.detail, {super.key});
-//   final IconData icon;
-//   final String detail;
-
-//   @override
-//   Widget build(BuildContext context) => Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Row(
-//           children: [
-//             Icon(icon),
-//             const SizedBox(width: 8),
-//             Text(
-//               detail,
-//               style: const TextStyle(fontSize: 18),
-//             )
-//           ],
-//         ),
-//       );
-// }
-
 class StyledButton extends StatelessWidget {
   const StyledButton({required this.child, required this.onPressed, super.key});
   final Widget child;
@@ -141,22 +94,33 @@ class StyledButton extends StatelessWidget {
       );
 }
 
-// class TempControlButton extends StatelessWidget {
-//   const TempControlButton(
-//       {required this.child, required this.onPressed, super.key});
-//   final Widget child;
-//   final void Function() onPressed;
+class PostButton extends StatelessWidget {
+  const PostButton(
+      {required this.mainText,
+      required this.secondText,
+      required this.onPressed,
+      super.key});
+  final String mainText;
+  final String secondText;
+  final void Function() onPressed;
 
-//   @override
-//   Widget build(BuildContext context) => ElevatedButton(
-//         style: ElevatedButton.styleFrom(
-//           fixedSize: Size(150, 150),
-//           elevation: 2,
-//           side: const BorderSide(width: 1, color: color_5),
-//           foregroundColor: color_5,
-//           backgroundColor: color_5,
-//         ),
-//         onPressed: onPressed,
-//         child: child,
-//       );
-// }
+  @override
+  Widget build(BuildContext context) => TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: color_6,
+        elevation: 10,
+        fixedSize: const Size(20, 25),
+      ),
+      onPressed: onPressed,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          mainText,
+          style: const TextStyle(
+              fontSize: 15, letterSpacing: 3, color: Colors.white),
+        ),
+        Text(
+          secondText,
+          style: const TextStyle(fontSize: 12, color: color_3),
+        ),
+      ]));
+}

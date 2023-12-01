@@ -3,6 +3,8 @@ import 'package:web_control/src/widgets.dart';
 import 'package:web_control/toggle.dart';
 import '../app_state.dart';
 
+//hasonló a temperature oldalhoz, nincs részletesen kommentelve
+
 class ultrasonicPage extends StatefulWidget {
   const ultrasonicPage({super.key});
   @override
@@ -25,13 +27,12 @@ class _ultrasonicPageState extends State<ultrasonicPage> {
 class ultrasonicBody extends StatelessWidget {
   const ultrasonicBody({super.key, required this.listNotifier});
 
-  final ApplicationState listNotifier; //a példánysított állapothpz listNotifier
-
+  final ApplicationState listNotifier;
   @override
   Widget build(BuildContext context) {
-    final blockWidth = MediaQuery.of(context).size.width / 2;
+    final blockWidth = MediaQuery.of(context).size.width / 2; //+if beépítése
     final blockHeight = MediaQuery.of(context).size.height / 2;
-
+    late String isOpened, desc;
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -40,13 +41,21 @@ class ultrasonicBody extends StatelessWidget {
             child: ListenableBuilder(
               listenable: listNotifier,
               builder: (BuildContext context, Widget? child) {
-                // Minden alkalommal, amikor a lista változik, újraépítjük
-                // így a framework tudja h frissíteni kell a rendert
-                final List<TemperatureMessage> values =
-                    listNotifier.temperatureMessages; // lista másolás
+                final List<UltrasonicMessage> values =
+                    listNotifier.ultrasonicMessages;
 
-                return Block(
-                    'CLOSE', 'THE DOOR', 'ITS OPENED', blockWidth, blockHeight);
+                //legfrissebb elemet olvassa ki a [0], [values.lenght-1]-gyel az utolsót olvashatom ki (az a door_state doc)
+                if (values[0].isOpened == true) {
+                  isOpened = 'CLOSE';
+                  desc = 'OPENED';
+                } else {
+                  isOpened = 'OPEN';
+                  desc = 'CLOSED';
+                }
+
+                //body tartalma
+                return Block(isOpened, 'THE DOOR', "IT'S $desc", blockWidth,
+                    blockHeight);
               },
             ),
           )
