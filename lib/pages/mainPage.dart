@@ -9,9 +9,6 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 late int rownumber;
-var valueList = [3, 2, leftHome, 4, 5, 6];
-var unitList = ['cm', 'mm', 'times', 'kg', 'dkg', 'g'];
-var nameList = ['DAILY AVG', 'FAVOURITE', 'LEFT HOME', 'SMT', 'SMT', 'SMT'];
 
 class mainPage extends StatelessWidget {
   @override
@@ -27,6 +24,10 @@ class mainPage extends StatelessWidget {
     } else {
       rownumber = 2;
     }
+
+    var valueList = [1, 2, leftHome, 4, 5, 6];
+    var unitList = ['cm', 'mm', 'times', 'kg', 'dkg', 'g'];
+    var nameList = ['DAILY AVG', 'FAVOURITE', 'LEFT HOME', 'SMT', 'SMT', 'SMT'];
 
     return Scaffold(
       backgroundColor: color_5,

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'pages/mainPage.dart';
 import 'pages/temperaturePage.dart';
@@ -7,13 +9,6 @@ import 'src/widgets.dart';
 import 'package:provider/provider.dart';
 import '../toggle.dart';
 import '../app_state.dart';
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
 
 const _navBarItems = [
   BottomNavigationBarItem(
@@ -38,6 +33,13 @@ const _navBarItems = [
   ),
 ];
 
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
@@ -48,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final bool isLargeScreen = width > 1000;
 
     final screens = [
-      _mainPageState(),
+      mainPage(),
       // Navigator.push(context, MaterialPageRoute(builder: (context) => ultrasonicPage())),
       ultrasonicPage(),
       temperaturePage(),

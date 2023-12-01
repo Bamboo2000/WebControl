@@ -29,7 +29,7 @@ class _ToggleFuncState extends State<ToggleFunc> {
       FirebaseFirestore.instance.collection("homeoraway").doc("RUHome");
   bool isHome = true;
 
-  late double tempValue = widget.values[0].value; //utso hőm. érték
+  // late double tempValue = widget.values[0].value; //utso hőm. érték
 
   @override
   Widget build(BuildContext context) {
