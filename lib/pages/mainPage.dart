@@ -30,15 +30,34 @@ class mainPage extends StatelessWidget {
     var nameList = ['DAILY AVG', 'FAVOURITE', 'LEFT HOME', 'SMT', 'SMT', 'SMT'];
 
     return Scaffold(
-      backgroundColor: color_5,
-      body: GridView.count(
-        crossAxisCount: rownumber,
-        children: List.generate(6, (index) {
-          return Center(
-              child: Block(valueList[index].toDouble(), unitList[index],
-                  nameList[index]));
-        }),
-      ),
-    );
+        backgroundColor: color_5,
+        body: GridView.count(
+          crossAxisCount: rownumber,
+          children: List.generate(6, (index) {
+            if (index == 0) {
+              return const Block(2, 'cm', 'DAILY AVG');
+            }
+            if (index == 1) {
+              return const Text('1');
+            }
+            if (index == 2) {
+              return Block(leftHome, 'times', 'TODAY');
+            }
+            if (index == 3) {
+              return const Text('1');
+            }
+            if (index == 4) {
+              return const Text('1');
+            }
+            if (index == 5) {
+              return const Text('1');
+            } else {
+              return const Text('0');
+            }
+            // return Center(
+            //     child: Block(valueList[index].toDouble(), unitList[index],
+            //         nameList[index]));
+          }),
+        ));
   }
 }
