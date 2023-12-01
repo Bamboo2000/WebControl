@@ -44,8 +44,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final bool isSmallScreen = width < 600;
-    final bool isLargeScreen = width > 1000;
+    final bool isSmallScreen = width < 700;
+    final bool isLargeScreen = width > 1200;
 
     final screens = [
       mainPage(),

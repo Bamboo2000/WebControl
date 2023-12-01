@@ -10,10 +10,14 @@ const color_5 = Color.fromARGB(111, 255, 255, 255);
 const color_6 = Color(0xFF32353e);
 
 class Block extends StatelessWidget {
-  const Block(this.mainValue, this.unitofMeasure, this.descripton, {super.key});
-  final double mainValue;
+  const Block(this.mainValue, this.unitofMeasure, this.descripton, this.width,
+      this.height,
+      {super.key});
+  final String mainValue;
   final String unitofMeasure;
   final String descripton;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -21,8 +25,9 @@ class Block extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              width: 200,
-              height: 200,
+              // +dinamikussá tenni
+              width: width,
+              height: height,
               child: Card(
                 elevation: 5,
                 shadowColor: color_6,

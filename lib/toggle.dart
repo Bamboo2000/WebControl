@@ -49,7 +49,7 @@ class _ToggleFuncState extends State<ToggleFunc> {
               activeFgColor: Colors.white,
               inactiveBgColor: Colors.grey,
               inactiveFgColor: Colors.white,
-              initialLabelIndex: 0,
+              initialLabelIndex: 0, //kell bele memoria
               totalSwitches: 2,
               labels: const ['Home', 'Away'],
               radiusStyle: true,
