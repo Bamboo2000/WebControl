@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "323318676450",
+    "project_id": "fgdh-74592",
+    "storage_bucket": "fgdh-74592.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323318676450:android:d2777d9ce3ea2294a1d7bb",
+        "android_client_info": {
+          "package_name": "com.example.web_control"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB00o4-ticI3Bt7cP54shxEFBteqGVwyII"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
