@@ -7,7 +7,6 @@ import 'src/widgets.dart';
 import 'package:provider/provider.dart';
 import '../toggle.dart';
 import '../app_state.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 const _navBarItems = [
   BottomNavigationBarItem(
@@ -44,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final postRef = FirebaseFirestore.instance.collection("post").doc("post_state");
     final width = MediaQuery.of(context).size.width;
     final bool isSmallScreen = width < 700;
     final bool isLargeScreen = width > 1200;
@@ -73,27 +71,6 @@ class _MyHomePageState extends State<MyHomePage> {
             values: appState.temperatureMessages, //kiolvasás
           ),
         ),
-        /*
-        Row(
-          children: [
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => ToggleFunc(
-                addisHome: (isHome) => appState.addMessageToUcontrol(isHome),
-                values: appState.temperatureMessages, //kiolvasás
-              ),
-            ),
-            PostButton(
-              onPressed: () async {
-                // post cellectionben true-ra vált
-                // for myself: csak a final postRef kell hozzá
-                postRef.update({"post": true});
-              },
-              mainText: 'POST',
-              secondText: 'A QUOTE',
-            ),
-          ],
-        ),
-        */
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
