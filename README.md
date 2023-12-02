@@ -1,16 +1,14 @@
-# web_control
+# WebControl frontend
 
-A new Flutter project.
+Webes alkalmazások házi feladat frontend része.
 
-## Getting Started
+## Specifikációk
+Bejelentkező felület:
 
-This project is a starting point for a Flutter application.
+A UI kommunikál az adatbázissal:
 
-A few resources to get you started if this is your first Flutter project:
+Méretezhető:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
