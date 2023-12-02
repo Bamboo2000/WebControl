@@ -10,10 +10,10 @@ class TemperatureMessage {
   final double value;
 }
 
-//kiolvasáshoz
-class UltrasonicMessage {
-  UltrasonicMessage({required this.isOpened});
-  final bool isOpened;
+// main pagen kell
+class HomeMessage {
+  HomeMessage({required this.isHome});
+  final bool isHome;
 }
 
 class ToggleFunc extends StatefulWidget {
@@ -26,15 +26,19 @@ class ToggleFunc extends StatefulWidget {
   State<ToggleFunc> createState() => _ToggleFuncState();
 }
 
+//statisztika hányszot mentem el otthonról - végül nem használt
 double leftHome = 0;
 
 class _ToggleFuncState extends State<ToggleFunc> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_ToggleFuncState');
+
+  //homeoraway collection, RUHome doc elérése
   final isHomeRef =
       FirebaseFirestore.instance.collection("homeoraway").doc("RUHome");
-  bool isHome = true;
 
-  // late double tempValue = widget.values[0].value; //utso hőm. érték
+  //szükséges változók
+  late bool isHome;
+  int labelIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +58,18 @@ class _ToggleFuncState extends State<ToggleFunc> {
               activeFgColor: Colors.white,
               inactiveBgColor: Colors.grey,
               inactiveFgColor: Colors.white,
-              initialLabelIndex: 0, //kell bele memoria
+              initialLabelIndex: labelIndex, //kell bele memoria
               totalSwitches: 2,
               labels: const ['Home', 'Away'],
               radiusStyle: true,
               onToggle: (index) async {
-                //bug: ha kattintok, mindig vált isHome-ot, akkor is ha nem váltok át
-                isHome = !isHome;
-                leftHome +=
-                    0.5; //és egészre kerekítve adom meg majd, így azt írja ki hányszor mentem el otthonról, nem a toggle számot
+                if (index == 0) {
+                  isHome = true;
+                  labelIndex = 0;
+                } else {
+                  isHome = false;
+                  labelIndex = 1;
+                }
                 // await widget.addisHome(isHome); //addol új doc-ot (nem lett kiszedve a többi része, csak itt)
                 isHomeRef.update({"isHome": isHome});
               },

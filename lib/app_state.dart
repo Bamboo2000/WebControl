@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'pages/ultrasonicPage.dart';
 import 'firebase_options.dart';
 import 'dart:async';
 import 'toggle.dart';
@@ -24,6 +25,10 @@ class ApplicationState extends ChangeNotifier {
   StreamSubscription<QuerySnapshot>? _ultrasonicSubscription;
   List<UltrasonicMessage> _ultrasonicMessages = [];
   List<UltrasonicMessage> get ultrasonicMessages => _ultrasonicMessages;
+
+  StreamSubscription<QuerySnapshot>? _homeSubscription;
+  List<HomeMessage> _homeMessages = [];
+  List<HomeMessage> get homeMessages => _homeMessages;
 
   Future<void> init() async {
     await Firebase.initializeApp(
@@ -82,6 +87,32 @@ class ApplicationState extends ChangeNotifier {
         _loggedIn = false;
         _ultrasonicMessages = [];
         _ultrasonicSubscription?.cancel();
+      }
+      notifyListeners();
+    });
+
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user != null) {
+        _loggedIn = true;
+        _homeSubscription = FirebaseFirestore.instance
+            .collection('homeoraway')
+            // .orderBy('ts', descending: true)
+            .snapshots()
+            .listen((snapshot) {
+          _homeMessages = [];
+          for (final document in snapshot.docs) {
+            _homeMessages.add(
+              HomeMessage(
+                isHome: document.data()['isHome'] as bool,
+              ),
+            );
+          }
+          notifyListeners();
+        });
+      } else {
+        _loggedIn = false;
+        _homeMessages = [];
+        _homeSubscription?.cancel();
       }
       notifyListeners();
     });

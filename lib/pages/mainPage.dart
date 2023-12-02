@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../app_state.dart';
+import '../toggle.dart'; //HomeMessage miatt
 import '../src/authentication.dart';
 import '../src/widgets.dart';
 
@@ -54,6 +55,9 @@ class MainBody extends StatelessWidget {
     } else {
       rownumber = 2;
     }
+
+    //szükséges paraméter
+    late String isHome;
 
     return Scaffold(
         backgroundColor: color_5,
@@ -108,7 +112,7 @@ class MainBody extends StatelessWidget {
                 child: Container(
                   decoration: const BoxDecoration(
                       color: Colors.amber,
-                      borderRadius: BorderRadius.all(Radius.circular(150))),
+                      borderRadius: BorderRadius.all(Radius.circular(300))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,7 +164,33 @@ class MainBody extends StatelessWidget {
             }
             //---------------------HOME-AWAY-------------------------
             if (index == 4) {
-              return const Text('1');
+              return Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    Expanded(
+                      child: ListenableBuilder(
+                        listenable: listNotifier,
+                        builder: (BuildContext context, Widget? child) {
+                          final List<HomeMessage> values =
+                              listNotifier.homeMessages;
+
+                          //legfrissebb elemet olvassa ki a [0], [values.length-1]-gyel az utolsót olvashatom ki (az a door_state doc)
+                          if (values[values.length - 1].isHome == true) {
+                            isHome = 'HOME';
+                          } else {
+                            isHome = 'AWAY';
+                          }
+
+                          //body tartalma
+                          return Block(
+                              isHome, '- says', "THE DATABASE", 500, 200);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              );
             }
             //---------------------LAST-SOMETHING-------------------------
             else {

@@ -41,7 +41,7 @@ class Block extends StatelessWidget {
                       mainValue.toString(),
                       style: GoogleFonts.monoton(
                         textStyle:
-                            const TextStyle(fontSize: 80, color: Colors.black),
+                            const TextStyle(fontSize: 75, color: Colors.black),
                       ),
                     ),
                     Text(
