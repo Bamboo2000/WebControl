@@ -35,12 +35,21 @@ class ultrasonicBody extends StatelessWidget {
   final ApplicationState listNotifier;
   @override
   Widget build(BuildContext context) {
-    final blockWidth = MediaQuery.of(context).size.width / 2; //+if beépítése
-    final blockHeight = MediaQuery.of(context).size.height / 2;
+    //sortörés elkerülése és látványosabb funkció miatt
+    //magasság állandó
+    double blockHeight = 300;
+    //szélesség bizonyos ablakméretig (kicsit több mint a közepes) állandó, utána arányosan nő
+    late double blockWidth;
+    if (MediaQuery.of(context).size.width > 800) {
+      blockWidth = MediaQuery.of(context).size.width / 2;
+    } else {
+      blockWidth = 400;
+    }
 
     //szükséges paraméterek
     late String isOpened, desc;
 
+    //az oldal tartalma
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,10 +58,12 @@ class ultrasonicBody extends StatelessWidget {
             child: ListenableBuilder(
               listenable: listNotifier,
               builder: (BuildContext context, Widget? child) {
+                //List generálása az adatbázis adataiból
                 final List<UltrasonicMessage> values =
                     listNotifier.ultrasonicMessages;
 
-                //legfrissebb elemet olvassa ki a [0], [values.length-1]-gyel az utolsót olvashatom ki (az a door_state doc)
+                //legfrissebb elemet olvassa ki a [0],
+                //utolsó elemet a [values.length-1] (az a door_state doc jelenleg)
                 if (values[0].isOpened == true) {
                   isOpened = 'CLOSE';
                   desc = 'OPENED';

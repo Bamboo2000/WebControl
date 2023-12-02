@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'pages/mainPage.dart';
 import 'pages/temperaturePage.dart';
 import 'pages/ultrasonicPage.dart';
-// import 'pages/profilePage.dart';
+// import 'pages/profilePage.dart'; //végül nme használjuk
 import 'src/widgets.dart';
 import 'package:provider/provider.dart';
 import '../toggle.dart';
 import '../app_state.dart';
 
+//az alsó navigáció elem elnevezések
 const _navBarItems = [
   BottomNavigationBarItem(
     icon: Icon(Icons.home_outlined),
@@ -38,19 +39,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //ablak mérete
     final width = MediaQuery.of(context).size.width;
     final bool isSmallScreen = width < 700;
     final bool isLargeScreen = width > 1200;
 
+    //itt hívjuk meg az oldalakat (routing kicsit profibb)
     final screens = [
       mainPage(),
       ultrasonicPage(),
       temperaturePage(),
     ];
 
+    //oldal tartalma - fejléc, navigációs ablakok
     return Scaffold(
+      //appBar: fejléc
       appBar: AppBar(
         backgroundColor: color_1,
+
+        //leading: fejléc bal sarka
         leadingWidth: 150,
         leading: const Center(
           child: Text(
@@ -59,12 +66,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
+
+        //title: fejléc közepe - toggle gomb
         title: Consumer<ApplicationState>(
           builder: (context, appState, _) => ToggleFunc(
             addisHome: (isHome) => appState.addMessageToUcontrol(isHome),
             values: appState.temperatureMessages, //kiolvasás
           ),
         ),
+
+        //action: fejléc jobb sarka
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 16.0),
@@ -75,6 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
+
+      //ha kicsi a képernyő, alsó navbar
       bottomNavigationBar: isSmallScreen
           ? BottomNavigationBar(
               selectedItemColor: Colors.white,
@@ -88,6 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               })
           : null,
+
+      //oldalsó navbár
       body: Row(
         children: <Widget>[
           if (!isSmallScreen)
@@ -121,7 +136,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   .toList(),
             ),
           const VerticalDivider(thickness: 1, width: 1),
-          // This is the main content.
+
+          // a főoldal tartalma - meghívja az oldalakat
           Expanded(
             child: screens[_selectedIndex],
           )
@@ -131,16 +147,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+//fejlác jobb sarka külső fv
 class _InfoIcon extends StatelessWidget {
   const _InfoIcon({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //Tooltip - felugró ablak
     return const Tooltip(
-      // decoration: BoxDecoration(
-      //   color: color_6,
-      //   borderRadius: BorderRadius.all(Radius.circular(5)),
-      // ),
       message:
           'Webes alkalmazások fejlesztése HF\n\nKészítették:\nBalogh Árpád Mátyás - BWTY9G\nBarcza Bende - HS9T14\nBognár Péter - E8SJ91\nHubay Csenge - RNI5C7\nKnoll Ágoston - SZHWO7\n\n2023.12.01.',
       child: Icon(

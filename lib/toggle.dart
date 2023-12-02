@@ -10,7 +10,7 @@ class TemperatureMessage {
   final double value;
 }
 
-// main pagen kell
+// main pagen kell kiolvasáshoz
 class HomeMessage {
   HomeMessage({required this.isHome});
   final bool isHome;
@@ -20,7 +20,7 @@ class ToggleFunc extends StatefulWidget {
   const ToggleFunc({required this.addisHome, required this.values, super.key});
 
   final FutureOr<void> Function(bool isHome) addisHome;
-  final List<TemperatureMessage> values; //kiolvasás
+  final List<TemperatureMessage> values; //kiolvasáshoz
 
   @override
   State<ToggleFunc> createState() => _ToggleFuncState();
@@ -42,6 +42,7 @@ class _ToggleFuncState extends State<ToggleFunc> {
 
   @override
   Widget build(BuildContext context) {
+    //toggle gomb
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Form(
@@ -71,7 +72,8 @@ class _ToggleFuncState extends State<ToggleFunc> {
                   labelIndex = 1;
                 }
                 // await widget.addisHome(isHome); //addol új doc-ot (nem lett kiszedve a többi része, csak itt)
-                isHomeRef.update({"isHome": isHome});
+                isHomeRef
+                    .update({"isHome": isHome}); //updateli a database fieldet
               },
             ),
           ],

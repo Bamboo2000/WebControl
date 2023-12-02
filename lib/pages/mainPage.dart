@@ -17,6 +17,7 @@ class mainPage extends StatefulWidget {
   State<mainPage> createState() => _mainPageState();
 }
 
+//példányosítom az ApplicationState-t az adatbázisos részek miatt
 class _mainPageState extends State<mainPage> {
   final ApplicationState _appstate = ApplicationState();
 
@@ -59,12 +60,15 @@ class MainBody extends StatelessWidget {
     //szükséges paraméter
     late String isHome;
 
+    //az oldal tartalma
     return Scaffold(
-        backgroundColor: color_5,
-        // 6 db blokk deklarálása, majd feltöltése tartalommal
-        body: GridView.count(
-          crossAxisCount: rownumber,
-          children: List.generate(6, (index) {
+      backgroundColor: color_5,
+      // 6 db blokk deklarálása, majd feltöltése tartalommal
+      body: GridView.count(
+        crossAxisCount: rownumber,
+        children: List.generate(
+          6,
+          (index) {
             //---------------------WELCOME-SCREEN-------------------------
             if (index == 0) {
               return const Padding(
@@ -138,29 +142,30 @@ class MainBody extends StatelessWidget {
             //---------------------POST-BUTTON-------------------------
             if (index == 3) {
               return Card(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'I can also:',
-                    style: GoogleFonts.playfairDisplay(
-                      textStyle:
-                          const TextStyle(fontSize: 30, color: Colors.black),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'I can also:',
+                      style: GoogleFonts.playfairDisplay(
+                        textStyle:
+                            const TextStyle(fontSize: 30, color: Colors.black),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  PostButton(
-                    onPressed: () async {
-                      // post cellectionben true-ra vált
-                      // for myself: csak a final postRef kell hozzá
-                      postRef.update({"post": true});
-                    },
-                    mainText: 'POST',
-                    secondText: 'A QUOTE',
-                  ),
-                ],
-              ));
+                    const SizedBox(height: 20),
+                    PostButton(
+                      onPressed: () async {
+                        // post cellectionben true-ra vált
+                        // for myself: csak a final postRef kell hozzá
+                        postRef.update({"post": true});
+                      },
+                      mainText: 'POST',
+                      secondText: 'A QUOTE',
+                    ),
+                  ],
+                ),
+              );
             }
             //---------------------HOME-AWAY-------------------------
             if (index == 4) {
@@ -172,6 +177,8 @@ class MainBody extends StatelessWidget {
                       child: ListenableBuilder(
                         listenable: listNotifier,
                         builder: (BuildContext context, Widget? child) {
+                          //List generálása az adatbázis adataiból
+                          //csak egy documentumunk van, de bővíthetőség miatt így lett
                           final List<HomeMessage> values =
                               listNotifier.homeMessages;
 
@@ -197,7 +204,9 @@ class MainBody extends StatelessWidget {
               //ha vmi hiba ütne be
               return const Block('ect.', 'more', "WHAT'S NEXT?", 270, 250);
             }
-          }),
-        ));
+          },
+        ),
+      ),
+    );
   }
 }

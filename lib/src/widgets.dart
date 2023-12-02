@@ -9,6 +9,7 @@ const color_4 = Color(0xFF32353e);
 const color_5 = Color.fromARGB(111, 255, 255, 255);
 const color_6 = Color(0xFF32353e);
 
+//Block osztály létrehozása - ezt példányosítjuk a UI megjelenítésre
 class Block extends StatelessWidget {
   const Block(this.mainValue, this.unitofMeasure, this.descripton, this.width,
       this.height,
@@ -66,6 +67,7 @@ class Block extends StatelessWidget {
       );
 }
 
+//pár felirathoz hasznos volt, de keveset használtam
 class Header extends StatelessWidget {
   const Header(this.heading, {super.key});
   final String heading;
@@ -80,6 +82,7 @@ class Header extends StatelessWidget {
       );
 }
 
+//Profile, Login gombokhoz
 class StyledButton extends StatelessWidget {
   const StyledButton({required this.child, required this.onPressed, super.key});
   final Widget child;
@@ -90,12 +93,13 @@ class StyledButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
             side: const BorderSide(color: color_6),
             foregroundColor: color_6,
-            fixedSize: Size(100, 50)),
+            fixedSize: const Size(100, 50)),
         onPressed: onPressed,
         child: child,
       );
 }
 
+//PostButton osztálya, megjelenési tulajdonságok
 class PostButton extends StatelessWidget {
   const PostButton(
       {required this.mainText,
@@ -111,7 +115,7 @@ class PostButton extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: color_6,
         elevation: 10,
-        fixedSize: Size(250, 90),
+        fixedSize: const Size(250, 90),
       ),
       onPressed: onPressed,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

@@ -24,8 +24,8 @@ class _temperaturePageState extends State<temperaturePage> {
 
 class TemperatureBody extends StatelessWidget {
   const TemperatureBody({super.key, required this.listNotifier});
-
-  final ApplicationState listNotifier; //a példánysított állapothpz listNotifier
+  //a példánysított állapothpz listNotifier
+  final ApplicationState listNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class TemperatureBody extends StatelessWidget {
                 //   itemCount: values.length,
                 // );
 
-                // idő hiányában nem a timestamp alapján kérdezzük le,
+                // nem a timestamp alapján kérdezzük le
                 // csak az utolsó x db értéket nézzük
                 for (int i = 0; i < values.length; i++) {
                   allTime += values[i].value;

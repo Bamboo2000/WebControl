@@ -17,7 +17,7 @@ class ApplicationState extends ChangeNotifier {
   bool _loggedIn = false;
   bool get loggedIn => _loggedIn;
 
-  //kiolvasáshoz
+  //kiolvasáshoz feliratkozások
   StreamSubscription<QuerySnapshot>? _temperatureSubscription;
   List<TemperatureMessage> _temperatureMessages = [];
   List<TemperatureMessage> get temperatureMessages => _temperatureMessages;
@@ -30,6 +30,7 @@ class ApplicationState extends ChangeNotifier {
   List<HomeMessage> _homeMessages = [];
   List<HomeMessage> get homeMessages => _homeMessages;
 
+  //itt initcializáljuk a Firebase-t
   Future<void> init() async {
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform);
@@ -38,7 +39,7 @@ class ApplicationState extends ChangeNotifier {
       EmailAuthProvider(),
     ]);
 
-    //kiolvasás (bőv.)
+    //itt 'hallgatjuk' a collection-öket, snapshottal a pillanatot nézzük
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
         _loggedIn = true;
@@ -118,6 +119,8 @@ class ApplicationState extends ChangeNotifier {
     });
   }
 
+  //új doksit hoz látra a homeoraway collection-ben
+  //toggle-hez, de végül csak egy doksit változtatunk, új létrehozása helyett
   Future<DocumentReference> addMessageToUcontrol(bool isHome) {
     if (!_loggedIn) {
       throw Exception('Must be logged in');
