@@ -23,6 +23,8 @@ class Block extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               // +dinamikussá tenni
@@ -109,18 +111,26 @@ class PostButton extends StatelessWidget {
       style: TextButton.styleFrom(
         backgroundColor: color_6,
         elevation: 10,
-        fixedSize: const Size(20, 25),
+        fixedSize: Size(250, 90),
       ),
       onPressed: onPressed,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text(
           mainText,
           style: const TextStyle(
-              fontSize: 15, letterSpacing: 3, color: Colors.white),
+            fontSize: 25,
+            letterSpacing: 3,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         Text(
           secondText,
-          style: const TextStyle(fontSize: 12, color: color_3),
+          style: const TextStyle(
+            fontSize: 18,
+            color: color_3,
+            // fontWeight: FontWeight.bold,
+          ),
         ),
       ]));
 }

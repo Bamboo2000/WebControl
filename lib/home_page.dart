@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/mainPage.dart';
 import 'pages/temperaturePage.dart';
 import 'pages/ultrasonicPage.dart';
-import 'pages/profilePage.dart';
+// import 'pages/profilePage.dart';
 import 'src/widgets.dart';
 import 'package:provider/provider.dart';
 import '../toggle.dart';
@@ -23,11 +23,6 @@ const _navBarItems = [
     icon: Icon(Icons.device_thermostat_outlined),
     activeIcon: Icon(Icons.device_thermostat_rounded),
     label: 'Temperature Sensor',
-  ),
-  BottomNavigationBarItem(
-    icon: Icon(Icons.person_outline),
-    activeIcon: Icon(Icons.person),
-    label: 'Profile',
   ),
 ];
 
@@ -51,7 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
       mainPage(),
       ultrasonicPage(),
       temperaturePage(),
-      profilePage(),
     ];
 
     return Scaffold(
@@ -83,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       bottomNavigationBar: isSmallScreen
           ? BottomNavigationBar(
-              selectedItemColor: color_2,
+              selectedItemColor: Colors.white,
               unselectedItemColor: color_1,
               backgroundColor: color_6,
               items: _navBarItems,

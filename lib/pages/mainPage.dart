@@ -1,8 +1,14 @@
-import '../src/widgets.dart';
 import 'package:flutter/material.dart';
-import '../toggle.dart';
-import '../app_state.dart';
+import 'package:firebase_auth/firebase_auth.dart'
+    hide EmailAuthProvider, PhoneAuthProvider;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+
+import 'package:google_fonts/google_fonts.dart';
+
+import '../app_state.dart';
+import '../src/authentication.dart';
+import '../src/widgets.dart';
 
 class mainPage extends StatefulWidget {
   const mainPage({super.key});
@@ -30,12 +36,16 @@ class MainBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //post collection, post_state doc elérése
     final postRef =
         FirebaseFirestore.instance.collection("post").doc("post_state");
 
+    //átméretezhetőség
     final width = MediaQuery.of(context).size.width;
     final bool isSmallScreen = width < 700;
     final bool isLargeScreen = width > 1200;
+
+    //képernyőtől függő sorok száma
     late int rownumber;
     if (isSmallScreen) {
       rownumber = 1;
@@ -45,55 +55,118 @@ class MainBody extends StatelessWidget {
       rownumber = 2;
     }
 
-    var valueList = [1, 2, leftHome, 4, 5, 6];
-    var unitList = ['cm', 'mm', 'times', 'kg', 'dkg', 'g'];
-    var nameList = ['DAILY AVG', 'FAVOURITE', 'LEFT HOME', 'SMT', 'SMT', 'SMT'];
-
     return Scaffold(
         backgroundColor: color_5,
+        // 6 db blokk deklarálása, majd feltöltése tartalommal
         body: GridView.count(
           crossAxisCount: rownumber,
           children: List.generate(6, (index) {
+            //---------------------WELCOME-SCREEN-------------------------
             if (index == 0) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 30.0,
-                  vertical: 120,
-                ),
-                child: PostButton(
-                  onPressed: () async {
-                    // post cellectionben true-ra vált
-                    // for myself: csak a final postRef kell hozzá
-                    postRef.update({"post": true});
-                  },
-                  mainText: 'POST',
-                  secondText: 'A QUOTE',
+              return const Padding(
+                padding: EdgeInsets.all(20),
+                child: Card(
+                  color: color_1,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Hello!',
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: color_5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text("I'm a card. You will find a lot of us.",
+                          style: TextStyle(fontSize: 15, color: color_6)),
+                      Text(
+                        "I can be a lot of things.",
+                        style: TextStyle(
+                            fontSize: 15,
+                            letterSpacing: 3.6,
+                            color: color_4,
+                            fontStyle: FontStyle.italic),
+                      ),
+                      SizedBox(height: 10),
+                      Text("Enjoy your stay!",
+                          style: TextStyle(
+                            fontSize: 25,
+                            color: color_5,
+                          )),
+                    ],
+                  ),
                 ),
               );
             }
-            // if (index > 0) { //vagy am johet ide az else
-            //   return const Text('1');
-            // }
-            // if (index == 2) {
-            //   return Block(leftHome, 'times', 'TODAY');
-            // }
-            // if (index == 3) {
-            //   return const Text('1');
-            // }
-            // if (index == 4) {
-            //   return const Text('1');
-            // }
-            // if (index == 5) {
-            //   return const Text('1');
-            // }
-            else {
-              return Block(valueList[index].toStringAsExponential(0),
-                  unitList[index], nameList[index], 270, 250);
+            //---------------------PROFILE-PART-------------------------
+            if (index == 1) {
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.all(Radius.circular(150))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const Header('Profile Settings'),
+                      Consumer<ApplicationState>(
+                        builder: (context, appState, _) => AuthFunc(
+                            loggedIn: appState.loggedIn,
+                            signOut: () {
+                              FirebaseAuth.instance.signOut();
+                            }),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             }
-
-            // return Center(
-            //     child: Block(valueList[index].toStringAsExponential(0),
-            //         unitList[index], nameList[index], 270, 250));
+            //---------------------STATS-DEMO-------------------------
+            if (index == 2) {
+              return const Block(
+                  '12', 'I can be a cool', "SENSOR VALUE", 250, 250);
+            }
+            //---------------------POST-BUTTON-------------------------
+            if (index == 3) {
+              return Card(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'I can also:',
+                    style: GoogleFonts.playfairDisplay(
+                      textStyle:
+                          const TextStyle(fontSize: 30, color: Colors.black),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  PostButton(
+                    onPressed: () async {
+                      // post cellectionben true-ra vált
+                      // for myself: csak a final postRef kell hozzá
+                      postRef.update({"post": true});
+                    },
+                    mainText: 'POST',
+                    secondText: 'A QUOTE',
+                  ),
+                ],
+              ));
+            }
+            //---------------------HOME-AWAY-------------------------
+            if (index == 4) {
+              return const Text('1');
+            }
+            //---------------------LAST-SOMETHING-------------------------
+            else {
+              //ha vmi hiba ütne be
+              return const Block('ect.', 'more', "WHAT'S NEXT?", 270, 250);
+            }
           }),
         ));
   }

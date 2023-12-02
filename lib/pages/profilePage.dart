@@ -1,3 +1,5 @@
+//VÉGÜL NINCS HASZNÁLVA
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     hide EmailAuthProvider, PhoneAuthProvider;
@@ -33,20 +35,3 @@ class profilePage extends StatelessWidget {
     );
   }
 }
-
-/* -- a column is fölös bele
-Consumer<ApplicationState>(
-            builder: (context, appState, _) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (appState.loggedIn) ...[
-                  // const Header('RU Home?'),
-                  ToggleFunc(
-                    addisHome: (isHome) =>
-                        appState.addMessageToUcontrol(isHome),
-                  ),
-                ],
-              ],
-            ),
-          ),
-          */
